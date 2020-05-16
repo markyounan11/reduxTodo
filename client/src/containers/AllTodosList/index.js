@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { List, Header, Message } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-​
+
 import { getAllTodos } from './../../actions/todos';
-​
+
 import moment from 'moment';
-​
+
 class AllTodosList extends Component {
-​
+
   componentDidMount() {
     console.log("Inside of componentDidMount");
     this.props.getAllTodos();
   }
-​
+
 ​
   renderList = () => {
     if (this.props.allTodos.length === 0) {
