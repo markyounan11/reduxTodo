@@ -11,9 +11,12 @@ export const GET_ALL_TODOS_ERROR = 'GET_ALL_TODOS_ERROR';
 
 
 // User Todos Section
-export const GET_USER_TODOS = 'GET)_USER_TODOS';
-export const GET_USER_TODOS_ERROR = 'GET)_USER_TODOS_ERROR';
+export const GET_USER_TODOS = 'GET_USER_TODOS';
+export const GET_USER_TODOS_ERROR = 'GET_USER_TODOS_ERROR';
 
+// Add user todos section
+export const ADD_TODO = 'ADD_TODO';
+export const ADD_TODO_ERROR = 'ADD_TODO_ERROR';
 // User authentication
 
 export const AUTH_USER = 'AUTH_USER';

@@ -2,25 +2,35 @@ import React, { Component } from 'react';
 
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
-import { Header, Form, Segment, Message, List, Pagination } from 'semantic-ui-react';
+import { Header, Form, Segment, Message, List, Pagination, Button } from 'semantic-ui-react';
 import { compose } from 'redux';
 
 import axios from 'axios';
 
 import { getUserTodos } from '../../actions/todos';
+import { ADD_TODO_ERROR } from '../../actions/types';
 
 class UserTodoList extends Component {
 
-    componentDidMount() {
-        this.props.getUserTodos();
+  onSubmit = async (formValues, dispatch) => {
+    try {
+      await axios.post('/api/user/todos', formValues, { headers: { 'authorization': localStorage.getItem('token') } });
+      this.props.getUserTodos();
+    } catch (e) {
+      dispatch({ type: ADD_TODO_ERROR, payload: e });
     }
+  }
+
+  componentDidMount() {
+    this.props.getUserTodos();
+  }
 
   renderAddTodo = ({ input, meta }) => {
     return (
       <>
         <Form.Input
           {...input}
-          error={ meta.touched && meta.error }
+          error={meta.touched && meta.error}
           fluid
           autoComplete='off'
           placeholder='Add a todo'
@@ -29,14 +39,21 @@ class UserTodoList extends Component {
     )
   }
   render() {
+    const { handleSubmit } = this.props;
     return (
       <>
-        <Header as='h2' color='teal' textAlign='center' content='Welcome to do the todo app'/>
-        <Form size='large'>
+        <Header as='h2' color='teal' textAlign='center' content='Welcome to do the todo app' />
+        <Form size='large' onSubmit={handleSubmit(this.onSubmit)}>
           <Segment stacked>
             <Field
               name='text'
               component={this.renderAddTodo}
+            />
+            <Button
+              type='submit'
+              fluid
+              color='teal'
+              content='Add a todo'
             />
           </Segment>
         </Form>
@@ -57,7 +74,7 @@ class UserTodoList extends Component {
 
 
 
-function mapStateToProps({ todos: { userTodos, getUserTodosServerError, getUserTodosClientError}}) {
+function mapStateToProps({ todos: { userTodos, getUserTodosServerError, getUserTodosClientError } }) {
   return {
     todos: userTodos,
     clientError: getUserTodosClientError,
