@@ -25,7 +25,7 @@ class App extends Component {
           <Route exact path='/counter' component={Counter}/>
           <Route exact path='/usertodos' component={UserTodoList}/>
           <Route exact path='/alltodos' component={AllTodosList}/>
-          <Route exact path='/signout' component={SignIn}/>
+          <Route exact path='/signin' component={SignIn}/>
           <Route exact path='/signout' component={SignOut}/>
           <Route exact path='/' component={SignUp}/>
         </Grid.Column>
