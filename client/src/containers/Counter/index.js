@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Grid, Header, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { increment, decrement } from '../../actions/counter';
+import requireAuth from '../../hoc/requireAuth';
 class Counter extends Component {
   render() {
     return (
@@ -18,14 +20,14 @@ class Counter extends Component {
               icon='minus circle'
               content='Decrement'
               negative
-              onClick={ this.props.decrement }
+              onClick={this.props.decrement}
             />
-            <Button.Or/>
+            <Button.Or />
             <Button
               icon='plus circle'
               content='Increment'
               positive
-              onClick={ this.props.increment }
+              onClick={this.props.increment}
             />
           </Button.Group>
         </Grid.Column>
@@ -40,4 +42,9 @@ function mapStateToProps(state) {
 };
 // 2nd parameter to connect is what actions we want wired up to this component
 // To be sent to all of our reducers
-export default  connect(mapStateToProps, { increment, decrement })(Counter);
+// export default requireAuth(connect(mapStateToProps, { increment, decrement })(Counter));
+//
+export default compose(
+  connect(mapStateToProps, { increment, decrement }),
+  requireAuth
+)(Counter);
