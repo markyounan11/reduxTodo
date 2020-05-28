@@ -19,6 +19,9 @@ export const ADD_TODO_ERROR = 'ADD_TODO_ERROR';
 // Update user todo by ID
 export const UPDATE_TODO_BY_ID_ERROR = 'UPDATE_TODO_BY_ID_ERROR';
 
+// Delete User Todo By ID
+export const DELETE_TODO_BY_ID_ERROR = 'DELETE_TODO_BY_ID_ERROR';
+
 // User authentication
 export const AUTH_USER = 'AUTH_USER';
 export const AUTH_USER_ERROR = 'AUTH_USER_ERROR';

@@ -9,7 +9,8 @@ import axios from 'axios';
 
 import UserTodoListItems from './UserTodoListItems';
 
-import { getUserTodos, updateTodoCompletedById } from '../../actions/todos';
+import { getUserTodos, updateTodoCompletedById, deleteTodoById } from '../../actions/todos';
+
 import { ADD_TODO_ERROR, ADD_TODO } from '../../actions/types';
 
 class UserTodoList extends Component {
@@ -48,14 +49,14 @@ class UserTodoList extends Component {
     )
   }
 
-handlePageChange = (event, data) => {
-  console.log(data);
-  this.setState({
-    activePage: data.activePage,
-    start: data.activePage === 1 ? 0 : data.activePage * 10 -10,
-    end: data.activePage * 10
-  });
-}
+  handlePageChange = (event, data) => {
+    console.log(data);
+    this.setState({
+      activePage: data.activePage,
+      start: data.activePage === 1 ? 0 : data.activePage * 10 - 10,
+      end: data.activePage * 10
+    });
+  }
 
   render() {
     const { handleSubmit } = this.props;
@@ -78,8 +79,9 @@ handlePageChange = (event, data) => {
         </Form>
         <List animated divided selection>
           <UserTodoListItems
-          todos={this.props.todos.slice(this.state.start, this.state.end)}
-          handleUpdate={this.props.updateTodoCompletedById} />
+            todos={this.props.todos.slice(this.state.start, this.state.end)}
+            handleUpdate={this.props.updateTodoCompletedById}
+            handleDelete={this.props.deleteTodoById} />
         </List>
         {
           this.props.todos.length <= 9 ?
@@ -107,11 +109,12 @@ handlePageChange = (event, data) => {
 
 
 
-function mapStateToProps({ todos: { userTodos, getUserTodosServerError, getUserTodosClientError } }) {
+function mapStateToProps({ todos: { userTodos, getUserTodosServerError, getUserTodosClientError, deleteTodoByIdError } }) {
   return {
     todos: userTodos,
     clientError: getUserTodosClientError,
-    serverError: getUserTodosServerError
+    serverError: getUserTodosServerError,
+    deleteTodoByIdError,
   };
 }
 
@@ -127,5 +130,5 @@ function mapStateToProps({ todos: { userTodos, getUserTodosServerError, getUserT
 
 export default compose(
   reduxForm({ form: 'addTodo' }),
-  connect(mapStateToProps, { getUserTodos, updateTodoCompletedById })
+  connect(mapStateToProps, { getUserTodos, updateTodoCompletedById, deleteTodoById })
 )(UserTodoList);
